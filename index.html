@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narasimha Reddy Kasarla - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Portfolio</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#certifications" class="nav-link">Certifications</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#hobbies" class="nav-link">Hobbies</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Hi, I'm <span class="highlight">Narasimha Reddy Kasarla</span>
+                </h1>
+                <p class="hero-subtitle">Machine Learning Engineer & Full Stack Developer</p>
+                <p class="hero-description">
+                    I create intelligent applications that solve real-world problems using machine learning and modern web technologies.
+                    From crop prediction systems to music recommendations, I love building solutions that make a difference!
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="interactive-profile">
+                    <div class="profile-container">
+                        <!-- Main Profile Circle -->
+                        <div class="profile-main">
+                            <div class="profile-image math-logo">
+                                <div class="math-symbol-container">
+                                    <div class="math-symbols">
+                                        <div class="symbol symbol-1">∫</div>
+                                        <div class="symbol symbol-2">π</div>
+                                        <div class="symbol symbol-3">∑</div>
+                                        <div class="symbol symbol-4">∞</div>
+                                        <div class="symbol symbol-5">∂</div>
+                                        <div class="symbol symbol-6">α</div>
+                                        <div class="symbol symbol-7">β</div>
+                                        <div class="symbol symbol-8">λ</div>
+                                        <div class="central-symbol">∆</div>
+                                    </div>
+                                    <div class="math-equations">
+                                        <div class="equation eq-1">f(x) = ax² + bx + c</div>
+                                        <div class="equation eq-2">e^(iπ) + 1 = 0</div>
+                                        <div class="equation eq-3">∇²ψ = 0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-ring"></div>
+                            <div class="profile-ring-2"></div>
+                        </div>
+                        
+                        <!-- Orbiting Tech Icons -->
+                        <div class="orbit-container">
+                            <div class="orbit orbit-1">
+                                <div class="orbit-icon" data-tech="Python">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                            </div>
+                            <div class="orbit orbit-2">
+                                <div class="orbit-icon" data-tech="Machine Learning">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                            </div>
+                            <div class="orbit orbit-3">
+                                <div class="orbit-icon" data-tech="React">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                            </div>
+                            <div class="orbit orbit-4">
+                                <div class="orbit-icon" data-tech="Data Science">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            <div class="orbit orbit-5">
+                                <div class="orbit-icon" data-tech="DevOps">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                            </div>
+                            <div class="orbit orbit-6">
+                                <div class="orbit-icon" data-tech="JavaScript">
+                                    <i class="fab fa-js"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Particles -->
+                        <div class="particles">
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                        </div>
+                        
+                        <!-- Interactive Stats -->
+                        <div class="floating-stats">
+                            <div class="stat-bubble stat-1">
+                                <span class="stat-number">5+</span>
+                                <span class="stat-label">ML Projects</span>
+                            </div>
+                            <div class="stat-bubble stat-2">
+                                <span class="stat-number">4</span>
+                                <span class="stat-label">Certifications</span>
+                            </div>
+                            <div class="stat-bubble stat-3">
+                                <span class="stat-number">10+</span>
+                                <span class="stat-label">Hackathons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-intro">
+                        I'm a passionate Machine Learning Engineer and Full Stack Developer who loves turning complex problems into intelligent solutions. 
+                        I've completed comprehensive courses from Udemy (Angela Yu's Full Stack course), Stanford's Deep Learning course through Coursera (Andrew Ng), 
+                        and specialized certifications from Simplilearn in DevOps and Data Science using R. I enjoy brainstorming innovative ideas and 
+                        participating in various hackathons to push the boundaries of technology.
+                    </p>
+                    <div class="skills">
+                        <h3>Technical Skills & Certifications</h3>
+                        <div class="skill-grid">
+                            <div class="skill-item">
+                                <i class="fab fa-python"></i>
+                                <span>Python</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-brain"></i>
+                                <span>Machine Learning</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-r-project"></i>
+                                <span>R Programming</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Time Series (ARIMA)</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-git-alt"></i>
+                                <span>Git & Version Control</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Jenkins CI/CD</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-dharmachakra"></i>
+                                <span>Kubernetes</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-robot"></i>
+                                <span>Selenium Testing</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-js"></i>
+                                <span>JavaScript</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-react"></i>
+                                <span>React</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fab fa-node-js"></i>
+                                <span>Node.js</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-database"></i>
+                                <span>Database Management</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Data Science</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-cloud"></i>
+                                <span>DevOps & Cloud</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-project-diagram"></i>
+                                <span>Deep Learning</span>
+                            </div>
+                            <div class="skill-item">
+                                <i class="fas fa-search"></i>
+                                <span>Data Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">ML Projects Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="4">0</div>
+                        <div class="stat-label">Professional Certifications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="10">0</div>
+                        <div class="stat-label">Hackathons Participated</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications & Learning</h2>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Stanford Deep Learning Specialization</h3>
+                    <p class="cert-provider">Andrew Ng - Coursera</p>
+                    <p>Comprehensive deep learning course covering neural networks, CNNs, RNNs, and advanced ML concepts.</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Full Stack Web Development</h3>
+                    <p class="cert-provider">Angela Yu - Udemy</p>
+                    <p>Complete web development bootcamp covering HTML, CSS, JavaScript, Node.js, React, and databases.</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>DevOps Engineering</h3>
+                    <p class="cert-provider">Simplilearn</p>
+                    <p>Professional certification in DevOps tools including Git, Jenkins, Kubernetes, and Selenium automation testing.</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">
+                        <i class="fab fa-r-project"></i>
+                    </div>
+                    <h3>Data Science with R</h3>
+                    <p class="cert-provider">Simplilearn</p>
+                    <p>Advanced data science certification focusing on R programming, ARIMA models, and time series analysis for research.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Music Recommendation System">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Music Recommendation System</h3>
+                        <p>An intelligent music recommendation system using machine learning algorithms to analyze user preferences and suggest personalized music tracks.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Crop Prediction System">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Crop Prediction System</h3>
+                        <p>ML-powered agricultural solution that predicts optimal crops based on soil conditions, weather data, and historical farming patterns to maximize yield.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Data Analysis</span>
+                            <span class="tech-tag">Agriculture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Blog Editor">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Blog Editor</h3>
+                        <p>A feature-rich blog editor with real-time editing, markdown support, and publishing capabilities for content creators and writers.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">Express</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interactive Web Agro Alert">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Interactive Web Agro Alert</h3>
+                        <p>A comprehensive agricultural alert system providing real-time notifications about weather conditions, pest warnings, and optimal farming practices.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">APIs</span>
+                            <span class="tech-tag">Real-time Data</span>
+                            <span class="tech-tag">Agriculture</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Fact Check ML Website">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Fact Check ML Website</h3>
+                        <p>Machine learning-powered fact-checking platform that analyzes news articles and statements to verify their authenticity and credibility.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Web Scraping</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section id="hobbies" class="hobbies">
+        <div class="container">
+            <h2 class="section-title">My Hobbies & Interests</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Mathematics</h3>
+                    <p>Passionate about mathematical concepts and their applications in machine learning. I love solving complex mathematical problems and exploring algorithms.</p>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Reading Books</h3>
+                    <p>Avid reader of technical books, research papers, and fiction. Always learning something new and staying updated with the latest technologies and trends.</p>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>Watching Movies</h3>
+                    <p>Movie enthusiast who enjoys sci-fi, thrillers, and documentaries. Movies inspire creativity and provide fresh perspectives for problem-solving.</p>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Brainstorming Ideas</h3>
+                    <p>Love generating innovative solutions and creative approaches to technical challenges. Always thinking about the next big idea or project.</p>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Hackathons</h3>
+                    <p>Active participant in various hackathons, collaborating with teams to build innovative solutions under tight deadlines and competitive environments.</p>
+                </div>
+
+                <div class="hobby-card">
+                    <div class="hobby-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Continuous Learning</h3>
+                    <p>Constantly learning new technologies and methodologies. Completed courses from Stanford (Andrew Ng) and Udemy (Angela Yu) to enhance my skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Let's Work Together</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>I'm always excited to discuss machine learning projects, full stack development opportunities, or collaborate on innovative ideas. 
+                    Whether it's about AI solutions, web development, or just brainstorming the next big thing - let's connect!</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>simhar25@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+91 7989151959</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>India</span>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Narasimha Reddy Kasarla. Made with ❤️ and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
