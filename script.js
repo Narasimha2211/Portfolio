@@ -371,8 +371,6 @@ document.querySelectorAll('.skill-item').forEach((item, index) => {
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
         // Get form data
         const formData = new FormData(this);
         const name = formData.get('name');
@@ -382,18 +380,22 @@ if (contactForm) {
         
         // Basic validation
         if (!name || !email || !subject || !message) {
+            e.preventDefault();
             showNotification('Please fill in all fields', 'error');
             return;
         }
         
         if (!isValidEmail(email)) {
+            e.preventDefault();
             showNotification('Please enter a valid email address', 'error');
             return;
         }
         
-        // Simulate form submission
-        showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
-        this.reset();
+        // Show loading message
+        showNotification('Sending message...', 'info');
+        
+        // Let the form submit to Formspree
+        // The page will redirect to Formspree's thank you page
     });
 }
 
