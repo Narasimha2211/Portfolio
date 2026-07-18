@@ -1,30 +1,28 @@
 {
   "name": "portfolio-website",
-  "version": "1.0.0",
-  "description": "A modern, responsive portfolio website showcasing projects and skills",
+  "version": "2.0.0",
+  "description": "Personal portfolio of Narasimha Reddy Kasarla — ML Engineer & Full-Stack Developer",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
     "dev": "npx live-server .",
-    "build": "echo 'No build step required for static site'",
-    "deploy": "echo 'Deploy to your preferred hosting platform'"
+    "build": "echo 'No build step required for static site'"
   },
   "keywords": [
     "portfolio",
-    "website",
+    "machine-learning",
+    "full-stack",
     "html",
     "css",
-    "javascript",
-    "responsive",
-    "modern"
+    "javascript"
   ],
-  "author": "Your Name",
+  "author": "Narasimha Reddy Kasarla <simhar25@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/portfolio"
+    "url": "https://github.com/Narasimha2211/Portfolio"
   },
-  "homepage": "https://yourusername.github.io/portfolio",
+  "homepage": "https://narasimha2211.github.io/Portfolio",
   "devDependencies": {
     "live-server": "^1.2.2",
     "serve": "^14.2.1"

@@ -1,70 +1,43 @@
-# My Portfolio
+# Portfolio — Narasimha Reddy Kasarla
 
-This is my personal portfolio website where I showcase my work as a Machine Learning Engineer and Full Stack Developer.
+My personal portfolio: a modern, dark-themed single-page site showcasing my work as a
+Machine Learning Engineer and Full-Stack Developer.
 
-## About
+**Live site:** https://narasimha2211.github.io/Portfolio
 
-I'm Narasimha Reddy Kasarla, and I work with machine learning and web development. I've taken some great courses including the Stanford Deep Learning Specialization by Andrew Ng and Angela Yu's Full Stack Web Development course. 
+## Highlights
 
-I really enjoy working on new ideas, joining hackathons, and building things that can actually help people.
-
-## What's Inside
-
-This portfolio has a clean design that works well on all devices. I added some nice animations and interactive elements to make it more engaging. The site includes information about me, my projects, what I like to do in my free time, and how to get in touch.
+- Modern dark design with gradient accents, glassmorphism navbar, and ambient background orbs
+- Animated terminal card in the hero, typewriter role text, and scroll-reveal animations
+- Featured projects pulled from my real GitHub work — quantitative finance, NLP, RAG, ML tooling
+- Grouped skills (Languages / ML & Data / Web & Backend / DevOps), animated stat counters
+- Async contact form via Formspree — no page redirect
+- Fully responsive, respects `prefers-reduced-motion`, no frameworks or build step
 
 ## Tech Stack
 
-Built with HTML, CSS, and JavaScript. I used Font Awesome for icons and Google Fonts for typography. Nothing too fancy - just solid, clean code.
+Vanilla HTML, CSS, and JavaScript. Fonts: Space Grotesk, Inter, JetBrains Mono.
+Icons: Font Awesome. That's it — no build step required.
 
-## Projects Featured
+## Featured Projects
 
-- Music Recommendation System using machine learning
-- Crop Prediction System for agriculture
-- Blog Editor with full CRUD functionality  
-- Web-based Agro Alert system
-- Fact-checking website using NLP
-
-## Site Structure
-
-The portfolio is organized into sections: a hero area with some floating tech icons, about me, my projects, hobbies (I love math!), and contact information.
+- [Market Risk Analytics](https://github.com/Narasimha2211/market-risk-analytics) — Black-Scholes, Monte Carlo VaR, stress testing
+- [AI-DPR](https://github.com/Narasimha2211/AI-DPR) — NLP analysis & risk prediction for government project reports
+- [Loan Servicing Console](https://github.com/Narasimha2211/loan-servicing-console) — accrual engine, reconciliation, audit trail
+- [SAP P2P Simulator](https://github.com/Narasimha2211/sap-p2p-simulator) — procure-to-pay with three-way match (FastAPI)
+- [RAG from Scratch](https://github.com/Narasimha2211/rag-from-scratch) — retrieval-augmented generation, no framework magic
+- [ML Training Visualizer](https://github.com/Narasimha2211/ml_viz) — real-time training dashboards in Streamlit
 
 ## Running Locally
 
-To view the portfolio:
-
-1. Clone this repository
 ```bash
 git clone https://github.com/Narasimha2211/Portfolio.git
 cd Portfolio
-```
-
-2. Open `index.html` in your browser, or run a simple server:
-```bash
 python3 -m http.server 3000
 ```
 
-Then visit `http://localhost:3000`
-
-## Making It Your Own
-
-If you want to use this as a template:
-
-- Update the personal information in `index.html`
-- Replace project details with your own work
-- Change the profile image (currently using a mathematical theme)
-- Update contact information
-- Modify the color scheme in `styles.css` if desired
-
-## Deployment
-
-The site is deployed on GitHub Pages at: https://narasimha2211.github.io/Portfolio
-
-To deploy your own version, just enable GitHub Pages in your repository settings.
+Then visit `http://localhost:3000`.
 
 ## Contact
 
-Feel free to reach out: simhar25@gmail.com
-
----
-
-Thanks for checking out my portfolio!
+simhar25@gmail.com · [github.com/Narasimha2211](https://github.com/Narasimha2211)

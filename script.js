@@ -1,638 +1,177 @@
-// Navbar functionality
-const hamburger = document.getElementById('hamburger');
+// ============================================================
+// Narasimha Reddy Kasarla — Portfolio
+// ============================================================
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ---------- Navbar: scrolled state + scroll progress ----------
+const navbar = document.getElementById('navbar');
+const progressBar = document.querySelector('.scroll-progress');
+
+function onScroll() {
+    navbar.classList.toggle('scrolled', window.scrollY > 24);
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = scrollable > 0 ? `${(window.scrollY / scrollable) * 100}%` : '0%';
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ---------- Mobile menu ----------
+const navToggle = document.getElementById('nav-toggle');
 const navMenu = document.getElementById('nav-menu');
 
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
 });
 
-// Close menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
+navMenu.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
+        navMenu.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
     });
 });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+// ---------- Active nav link while scrolling ----------
+const sections = document.querySelectorAll('main section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
 
-// Create scroll progress indicator
-function createScrollIndicator() {
-    const indicator = document.createElement('div');
-    indicator.className = 'scroll-indicator';
-    document.body.appendChild(indicator);
-    return indicator;
-}
-
-const scrollIndicator = createScrollIndicator();
-
-// Enhanced navbar background change and scroll indicator
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    const scrollTop = window.pageYOffset;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    
-    // Update scroll indicator
-    scrollIndicator.style.width = scrollPercent + '%';
-    
-    // Navbar effects
-    if (scrollTop > 100) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    }
-});
-
-// Animated counter for stats
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16); // 60 FPS
-    
-    function updateCounter() {
-        start += increment;
-        if (start < target) {
-            element.textContent = Math.floor(start);
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target;
-        }
-    }
-    
-    updateCounter();
-}
-
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+const activeObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-            
-            // Animate counters when stats section is visible
-            if (entry.target.closest('.about-stats')) {
-                const statNumbers = entry.target.querySelectorAll('.stat-number');
-                statNumbers.forEach(stat => {
-                    const target = parseInt(stat.dataset.target);
-                    animateCounter(stat, target);
-                });
-            }
-        }
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
     });
-}, observerOptions);
+}, { rootMargin: '-40% 0px -55% 0px' });
 
-// Observe elements for animation
-document.querySelectorAll('.project-card, .hobby-card, .skill-item, .stat-card, .cert-card').forEach(el => {
-    observer.observe(el);
-});
+sections.forEach(section => activeObserver.observe(section));
 
-// Observe stats section specifically
-const statsSection = document.querySelector('.about-stats');
-if (statsSection) {
-    observer.observe(statsSection);
+// ---------- Reveal on scroll (with stagger for siblings) ----------
+const revealEls = document.querySelectorAll('.reveal');
+
+if (prefersReducedMotion) {
+    revealEls.forEach(el => el.classList.add('revealed'));
+} else {
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => {
+        const siblings = [...el.parentElement.children].filter(child => child.classList.contains('reveal'));
+        el.style.setProperty('--reveal-delay', `${siblings.indexOf(el) * 0.08}s`);
+        revealObserver.observe(el);
+    });
 }
 
-// Typing effect for hero subtitle
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
+// ---------- Typewriter ----------
+const roles = [
+    'intelligent ML systems.',
+    'full-stack applications.',
+    'data-driven products.',
+    'things that ship.'
+];
+const typeTarget = document.getElementById('typewriter');
+
+if (prefersReducedMotion) {
+    typeTarget.textContent = roles[0];
+} else {
+    let roleIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
     function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
+        const current = roles[roleIndex];
+        charIndex += deleting ? -1 : 1;
+        typeTarget.textContent = current.slice(0, charIndex);
+
+        let delay = deleting ? 40 : 75;
+        if (!deleting && charIndex === current.length) {
+            delay = 2200;
+            deleting = true;
+        } else if (deleting && charIndex === 0) {
+            deleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            delay = 350;
         }
+        setTimeout(type, delay);
     }
-    
+
     type();
 }
 
-// Initialize typing effect after page load
-window.addEventListener('load', () => {
-    const subtitle = document.querySelector('.hero-subtitle');
-    if (subtitle) {
-        const originalText = subtitle.textContent;
-        typeWriter(subtitle, originalText, 80);
-    }
-    
-    // Initialize interactive profile features
-    initializeInteractiveProfile();
-});
+// ---------- Animated counters ----------
+const counters = document.querySelectorAll('.counter');
 
-// Interactive Profile Features
-function initializeInteractiveProfile() {
-    const orbitIcons = document.querySelectorAll('.orbit-icon');
-    const profileImage = document.querySelector('.profile-image');
-    const statBubbles = document.querySelectorAll('.stat-bubble');
-    const mathSymbols = document.querySelectorAll('.symbol');
-    const centralSymbol = document.querySelector('.central-symbol');
-    
-    // Math symbols interaction
-    mathSymbols.forEach((symbol, index) => {
-        symbol.addEventListener('click', () => {
-            // Create mathematical ripple effect
-            createMathRipple(symbol);
-            
-            // Change symbol temporarily
-            const originalSymbol = symbol.textContent;
-            const mathSymbols = ['∫', '∑', '∏', '∇', '∂', 'Ω', 'Φ', 'Ψ', 'θ', 'δ', 'γ', 'ε'];
-            const randomSymbol = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
-            
-            symbol.textContent = randomSymbol;
-            symbol.style.color = '#ff6b35';
-            symbol.style.transform = 'scale(1.8) rotate(720deg)';
-            
-            setTimeout(() => {
-                symbol.textContent = originalSymbol;
-                symbol.style.color = 'white';
-                symbol.style.transform = 'scale(1)';
-            }, 1500);
-        });
-        
-        symbol.addEventListener('mouseenter', () => {
-            symbol.style.fontSize = '2.5rem';
-            symbol.style.textShadow = '0 0 25px rgba(255, 215, 0, 1)';
-        });
-        
-        symbol.addEventListener('mouseleave', () => {
-            symbol.style.fontSize = '2rem';
-            symbol.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
-        });
-    });
-    
-    // Central symbol interaction
-    if (centralSymbol) {
-        centralSymbol.addEventListener('click', () => {
-            centralSymbol.style.transform = 'translate(-50%, -50%) scale(1.5) rotate(1080deg)';
-            centralSymbol.style.color = '#ff6b35';
-            
-            // Trigger all symbols to animate
-            mathSymbols.forEach((symbol, index) => {
-                setTimeout(() => {
-                    symbol.style.transform = 'scale(1.3) rotate(360deg)';
-                    symbol.style.color = '#ffd700';
-                    setTimeout(() => {
-                        symbol.style.transform = 'scale(1)';
-                        symbol.style.color = 'white';
-                    }, 300);
-                }, index * 100);
-            });
-            
-            setTimeout(() => {
-                centralSymbol.style.transform = 'translate(-50%, -50%) scale(1)';
-                centralSymbol.style.color = '#ffd700';
-            }, 2000);
-        });
-    }
-    
-    // Add click events to orbit icons
-    orbitIcons.forEach((icon, index) => {
-        icon.addEventListener('click', () => {
-            // Create ripple effect
-            createRippleEffect(icon);
-            
-            // Temporary pause orbit animation
-            icon.style.animationPlayState = 'paused';
-            setTimeout(() => {
-                icon.style.animationPlayState = 'running';
-            }, 1000);
-        });
-        
-        // Add hover sound effect (visual feedback)
-        icon.addEventListener('mouseenter', () => {
-            icon.style.transform = 'scale(1.3) rotate(10deg)';
-            icon.style.boxShadow = '0 0 30px rgba(255, 215, 0, 0.8)';
-        });
-        
-        icon.addEventListener('mouseleave', () => {
-            icon.style.transform = 'scale(1)';
-            icon.style.boxShadow = '0 0 25px rgba(255, 215, 0, 0.5)';
-        });
-    });
-    
-    // Profile image interaction
-    if (profileImage) {
-        profileImage.addEventListener('click', () => {
-            profileImage.style.transform = 'scale(1.1) rotate(360deg)';
-            setTimeout(() => {
-                profileImage.style.transform = 'scale(1)';
-            }, 1000);
-        });
-    }
-    
-    // Stat bubbles interaction
-    statBubbles.forEach(bubble => {
-        bubble.addEventListener('click', () => {
-            bubble.style.transform = 'scale(1.2)';
-            bubble.style.background = 'rgba(255, 215, 0, 0.3)';
-            setTimeout(() => {
-                bubble.style.transform = 'scale(1)';
-                bubble.style.background = 'rgba(255, 255, 255, 0.2)';
-            }, 500);
-        });
-    });
-    
-    // Create floating particles dynamically
-    createFloatingParticles();
-    
-    // Create mathematical particles
-    createMathParticles();
-}
+const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = Number(el.dataset.target);
+        counterObserver.unobserve(el);
 
-// Create mathematical ripple effect
-function createMathRipple(element) {
-    const ripple = document.createElement('div');
-    ripple.style.position = 'absolute';
-    ripple.style.borderRadius = '50%';
-    ripple.style.background = 'rgba(255, 107, 53, 0.6)';
-    ripple.style.transform = 'scale(0)';
-    ripple.style.animation = 'ripple 0.8s linear';
-    ripple.style.left = '50%';
-    ripple.style.top = '50%';
-    ripple.style.width = '30px';
-    ripple.style.height = '30px';
-    ripple.style.marginLeft = '-15px';
-    ripple.style.marginTop = '-15px';
-    ripple.style.border = '2px solid rgba(255, 215, 0, 0.8)';
-    
-    element.appendChild(ripple);
-    
-    setTimeout(() => {
-        ripple.remove();
-    }, 800);
-}
-
-// Create floating math particles
-function createMathParticles() {
-    const profileContainer = document.querySelector('.profile-container');
-    if (!profileContainer) return;
-    
-    const mathSymbols = ['∫', '∑', '∏', '∇', '∂', 'π', 'θ', 'α', 'β', 'γ', 'δ', 'ε'];
-    
-    setInterval(() => {
-        const particle = document.createElement('div');
-        particle.textContent = mathSymbols[Math.floor(Math.random() * mathSymbols.length)];
-        particle.style.position = 'absolute';
-        particle.style.color = 'rgba(255, 215, 0, 0.7)';
-        particle.style.fontSize = '1.2rem';
-        particle.style.fontWeight = 'bold';
-        particle.style.pointerEvents = 'none';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.bottom = '0px';
-        particle.style.animation = 'mathParticleFloat 6s linear forwards';
-        particle.style.textShadow = '0 0 10px rgba(255, 215, 0, 0.5)';
-        
-        profileContainer.appendChild(particle);
-        
-        setTimeout(() => {
-            particle.remove();
-        }, 6000);
-    }, 3000);
-}
-
-// Create ripple effect
-function createRippleEffect(element) {
-    const ripple = document.createElement('div');
-    ripple.style.position = 'absolute';
-    ripple.style.borderRadius = '50%';
-    ripple.style.background = 'rgba(255, 215, 0, 0.6)';
-    ripple.style.transform = 'scale(0)';
-    ripple.style.animation = 'ripple 0.6s linear';
-    ripple.style.left = '50%';
-    ripple.style.top = '50%';
-    ripple.style.width = '20px';
-    ripple.style.height = '20px';
-    ripple.style.marginLeft = '-10px';
-    ripple.style.marginTop = '-10px';
-    
-    element.appendChild(ripple);
-    
-    setTimeout(() => {
-        ripple.remove();
-    }, 600);
-}
-
-// Create dynamic floating particles
-function createFloatingParticles() {
-    const particlesContainer = document.querySelector('.particles');
-    if (!particlesContainer) return;
-    
-    setInterval(() => {
-        if (particlesContainer.children.length < 12) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
-            particle.style.animationDelay = Math.random() * 2 + 's';
-            
-            particlesContainer.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 8000);
-        }
-    }, 2000);
-}
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
-
-// Add floating animation to skills
-document.querySelectorAll('.skill-item').forEach((item, index) => {
-    item.style.animationDelay = `${index * 0.1}s`;
-    item.classList.add('float-animation');
-});
-
-// Contact form handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        // Get form data
-        const formData = new FormData(this);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
-        
-        // Basic validation
-        if (!name || !email || !subject || !message) {
-            e.preventDefault();
-            showNotification('Please fill in all fields', 'error');
+        if (prefersReducedMotion) {
+            el.textContent = target;
             return;
         }
-        
-        if (!isValidEmail(email)) {
-            e.preventDefault();
-            showNotification('Please enter a valid email address', 'error');
-            return;
+
+        const duration = 1400;
+        const start = performance.now();
+
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * target);
+            if (progress < 1) requestAnimationFrame(tick);
         }
-        
-        // Show loading message
-        showNotification('Sending message...', 'info');
-        
-        // Let the form submit to Formspree
-        // The page will redirect to Formspree's thank you page
+
+        requestAnimationFrame(tick);
     });
-}
+}, { threshold: 0.6 });
 
-// Email validation
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+counters.forEach(counter => counterObserver.observe(counter));
 
-// Notification system
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-    
-    // Add styles
-    Object.assign(notification.style, {
-        position: 'fixed',
-        top: '20px',
-        right: '20px',
-        padding: '15px 20px',
-        borderRadius: '10px',
-        color: 'white',
-        fontSize: '14px',
-        fontWeight: '500',
-        zIndex: '10000',
-        transform: 'translateX(400px)',
-        transition: 'transform 0.3s ease',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)'
-    });
-    
-    // Set background color based on type
-    const colors = {
-        success: '#10b981',
-        error: '#ef4444',
-        info: '#3b82f6'
-    };
-    notification.style.backgroundColor = colors[type] || colors.info;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Remove after 4 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 4000);
-}
+// ---------- Contact form (async submit, no redirect) ----------
+const form = document.getElementById('contact-form');
+const formStatus = document.getElementById('form-status');
+const submitBtn = document.getElementById('form-submit');
 
-// Add scroll reveal animation for elements
-function addScrollReveal() {
-    const elements = document.querySelectorAll('.about-text, .contact-info, .contact-form, .cert-card');
-    
-    elements.forEach(el => {
-        observer.observe(el);
-    });
-}
+form.addEventListener('submit', async event => {
+    event.preventDefault();
+    formStatus.textContent = '';
+    formStatus.className = 'form-status mono';
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Sending… <i class="fas fa-circle-notch fa-spin"></i>';
 
-// Initialize scroll reveal
-addScrollReveal();
-
-// Add CSS for scroll animations
-const style = document.createElement('style');
-style.textContent = `
-    .project-card, .hobby-card, .skill-item, .stat-card, .about-text, .contact-info, .contact-form, .cert-card {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    
-    .animate-in {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
-    }
-    
-    .float-animation {
-        animation: floatSkill 3s ease-in-out infinite;
-    }
-    
-    @keyframes floatSkill {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
-    
-    .skill-item:nth-child(even) .float-animation {
-        animation-direction: reverse;
-    }
-`;
-document.head.appendChild(style);
-
-// Add interactive cursor effect (optional)
-document.addEventListener('mousemove', (e) => {
-    const cursor = document.querySelector('.cursor');
-    if (!cursor) {
-        const newCursor = document.createElement('div');
-        newCursor.className = 'cursor';
-        Object.assign(newCursor.style, {
-            position: 'fixed',
-            width: '20px',
-            height: '20px',
-            background: 'rgba(79, 70, 229, 0.3)',
-            borderRadius: '50%',
-            pointerEvents: 'none',
-            zIndex: '9999',
-            transform: 'translate(-50%, -50%)',
-            transition: 'transform 0.1s ease'
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { Accept: 'application/json' }
         });
-        document.body.appendChild(newCursor);
+
+        if (response.ok) {
+            form.reset();
+            formStatus.textContent = '✓ Message sent — I\'ll get back to you soon!';
+            formStatus.classList.add('ok');
+        } else {
+            throw new Error('Formspree error');
+        }
+    } catch {
+        formStatus.textContent = '✗ Something went wrong. Email me directly at simhar25@gmail.com';
+        formStatus.classList.add('err');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send message <i class="fas fa-paper-plane"></i>';
     }
-    
-    const cursorElement = document.querySelector('.cursor');
-    cursorElement.style.left = e.clientX + 'px';
-    cursorElement.style.top = e.clientY + 'px';
 });
 
-// Add hover effects for interactive elements
-document.querySelectorAll('a, button, .project-card, .hobby-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        const cursor = document.querySelector('.cursor');
-        if (cursor) {
-            cursor.style.transform = 'translate(-50%, -50%) scale(2)';
-            cursor.style.background = 'rgba(79, 70, 229, 0.5)';
-        }
-    });
-    
-    el.addEventListener('mouseleave', () => {
-        const cursor = document.querySelector('.cursor');
-        if (cursor) {
-            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-            cursor.style.background = 'rgba(79, 70, 229, 0.3)';
-        }
-    });
-});
-
-// Dark mode toggle (bonus feature)
-function createDarkModeToggle() {
-    const toggle = document.createElement('button');
-    toggle.innerHTML = '<i class="fas fa-moon"></i>';
-    toggle.className = 'dark-mode-toggle';
-    
-    Object.assign(toggle.style, {
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        width: '50px',
-        height: '50px',
-        borderRadius: '50%',
-        border: 'none',
-        background: '#4f46e5',
-        color: 'white',
-        cursor: 'pointer',
-        zIndex: '1000',
-        fontSize: '1.2rem',
-        boxShadow: '0 10px 30px rgba(79, 70, 229, 0.3)',
-        transition: 'all 0.3s ease'
-    });
-    
-    toggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        toggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        
-        // Save preference
-        localStorage.setItem('darkMode', isDark);
-    });
-    
-    // Load saved preference
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (savedDarkMode) {
-        document.body.classList.add('dark-mode');
-        toggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-    
-    document.body.appendChild(toggle);
-}
-
-// Initialize dark mode toggle
-createDarkModeToggle();
-
-// Add dark mode styles
-const darkModeStyles = document.createElement('style');
-darkModeStyles.textContent = `
-    .dark-mode {
-        --bg-primary: #1a202c;
-        --bg-secondary: #2d3748;
-        --text-primary: #f7fafc;
-        --text-secondary: #e2e8f0;
-    }
-    
-    .dark-mode .navbar {
-        background: rgba(26, 32, 44, 0.95) !important;
-    }
-    
-    .dark-mode .about {
-        background: var(--bg-primary) !important;
-        color: var(--text-primary);
-    }
-    
-    .dark-mode .contact {
-        background: var(--bg-primary) !important;
-        color: var(--text-primary);
-    }
-    
-    .dark-mode .projects {
-        background: var(--bg-secondary) !important;
-    }
-    
-    .dark-mode .project-card,
-    .dark-mode .skill-item,
-    .dark-mode .stat-card,
-    .dark-mode .contact-form {
-        background: var(--bg-primary) !important;
-        color: var(--text-primary);
-    }
-    
-    .dark-mode .section-title,
-    .dark-mode .about-intro,
-    .dark-mode .contact-info h3,
-    .dark-mode .contact-info p,
-    .dark-mode .project-content h3,
-    .dark-mode .project-content p {
-        color: var(--text-primary) !important;
-    }
-    
-    .dark-mode-toggle:hover {
-        transform: scale(1.1);
-        box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4);
-    }
-`;
-document.head.appendChild(darkModeStyles);
-
-console.log('Portfolio website loaded successfully! 🚀');
+// ---------- Footer year ----------
+document.getElementById('year').textContent = new Date().getFullYear();
